@@ -13,7 +13,7 @@ const CountriesToShow = (props) =>{
   const single = props.search.map((country)=>{
     const languages = country.languages.map((language)=>{
       return (
-        <li>{language.name}</li>
+        <li key={language.name}>{language.name}</li>
       )
     })
     return <div key={country.name}>
@@ -21,7 +21,7 @@ const CountriesToShow = (props) =>{
       <p>Capital: {country.capital}</p>
       <p>Population: {country.population}</p>
       <h5>Spoken languages</h5>
-      <li>{languages}</li>
+      <ul>{languages}</ul>
       <img src={country.flag} width="300" ></img>
     </div> 
   })

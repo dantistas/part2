@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import axios from 'axios'
 
+const Button = (props) => {
+  const click = () => {
+    props.setNewSearch(props.country.name)
+  }
+  return (
+    <button onClick={click}>show</button>
+  )
+}
+
+
 const CountriesToShow = (props) =>{
   const list = props.search.map((country)=>{
     return <div key={country.name}>
       <img src={country.flag} width="25" ></img>
-      {country.name}
+      {country.name} <Button country={country} setNewSearch={props.setNewSearch}/>
     </div> 
   }) 
   const single = props.search.map((country)=>{
@@ -62,7 +72,7 @@ const App = () =>{
     <div>
     Search Countries: <input placeholder="search" value={newSearch} onChange={handleSearchChange}/>
     <ul>
-    <CountriesToShow search={search} newSearch={newSearch}/>
+    <CountriesToShow search={search} newSearch={newSearch} setNewSearch={setNewSearch}/>
   </ul>
     </div>
   )

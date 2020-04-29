@@ -1,7 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import axios from 'axios'
+import axios from 'axios';
+
+
+const GetWeather = (props) => {
+  const [ weather , setWeather] = useState(null)
+  const api_key = process.env.REACT_APP_API_KEY
+  useEffect(() => {
+    setWeather(null)
+  axios.get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${props.location}`).then(response => {
+      setWeather(response.data)
+    })
+  }, [])
+  if(!weather){
+    return <p>loading...</p>
+  }else if(weather){
+    return (
+      <div>
+        <h1>Weather in {props.location}</h1>
+        <p>temperature: {weather.current.temperature} celsius</p>
+        <img src={weather.current.weather_icons} width="100"></img>
+        <p>Wind: {weather.current.wind_speed} mph direction {weather.current.wind_dir}</p>
+      </div>
+      )
+  }
+}
 
 const Button = (props) => {
   const click = () => {
@@ -9,8 +33,10 @@ const Button = (props) => {
   }
   return (
     <button onClick={click}>show</button>
+    
   )
 }
+
 
 
 const CountriesToShow = (props) =>{
@@ -32,7 +58,8 @@ const CountriesToShow = (props) =>{
       <p>Population: {country.population}</p>
       <h5>Spoken languages</h5>
       <ul>{languages}</ul>
-      <img src={country.flag} width="300" ></img>
+      <img src={country.flag} width="300" ></img> 
+      <GetWeather location={country.capital, country.name}/>
     </div> 
   })
   if(props.newSearch === ''){

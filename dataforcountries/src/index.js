@@ -18,7 +18,7 @@ const GetWeather = (props) => {
   }else if(weather){
     return (
       <div>
-        <h1>Weather in {props.location}</h1>
+        <h1>Weather in {props.city}</h1>
         <p>temperature: {weather.current.temperature} celsius</p>
         <img src={weather.current.weather_icons} width="100"></img>
         <p>Wind: {weather.current.wind_speed} mph direction {weather.current.wind_dir}</p>
@@ -59,7 +59,7 @@ const CountriesToShow = (props) =>{
       <h5>Spoken languages</h5>
       <ul>{languages}</ul>
       <img src={country.flag} width="300" ></img> 
-      <GetWeather location={country.capital, country.name}/>
+      <GetWeather location={country.capital, country.name} city={country.capital}/>
     </div> 
   })
   if(props.newSearch === ''){

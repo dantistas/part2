@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import contactService from './services/contacts';
 
 
@@ -87,7 +86,23 @@ const App = () => {
   })
   
   const namesToShow = search.map((name)=>{
-    return <p key={name.name}>{name.name} {name.number}</p>
+    const deleteContact =() => {
+      if (window.confirm(`Are you sure you want to delete ${name.name} `)) { 
+      contactService
+      .erase(name.id).then(()=>{
+        setPersons(persons.filter(person => person.id !== name.id))
+      })
+      contactService
+      .getAll().then(initialContacts => {
+        setPersons(initialContacts)
+      })
+      }
+    }
+    return <div key={name.name}>
+              <p>{name.name} {name.number}</p>
+              <button onClick={deleteContact}>delete {name.name}</button>
+            </div>
+          
   })
 
   return (

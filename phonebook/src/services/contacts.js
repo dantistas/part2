@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 
 
@@ -18,6 +17,12 @@ const add = (nameObject) => {
     })
 }
 
+const erase = (id) => {
+    const request = axios.delete(`http://localhost:3001/persons/${id}`)
+    return request.then(response=>{
+        return response.data
+    })
+  }
 
 
-export default {getAll, add }
+export default {getAll, add, erase }

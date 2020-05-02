@@ -23,6 +23,11 @@ const erase = (id) => {
         return response.data
     })
   }
+  const update = (id, updatedContact) => {
+    const request = axios.put(`http://localhost:3001/persons/${id}`, updatedContact)
+    return request.then(response => {
+        return response.data
+    })
+  }
 
-
-export default {getAll, add, erase }
+export default {getAll, add, erase, update }

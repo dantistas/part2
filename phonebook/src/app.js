@@ -53,7 +53,22 @@ const App = () => {
     if(persons.find((name)=>{
     return  name.name.toLowerCase() === newName.toLowerCase()
     })){
-      alert (`${newName} is allready in the phonebook`) 
+      window.confirm(`${newName} is allready in the phonebook.Replace the old one with a new one ?`)
+      event.preventDefault()
+      const contact =persons.find((name)=>{
+        return  name.name.toLowerCase() === newName.toLowerCase()
+        })
+        const updatedContact = { 
+          name: newName,
+          number: newNumber
+          
+        }
+      contactService
+      .update(contact.id, updatedContact).then(returnedContact => {
+        setPersons(persons.map(person => person.id !== contact.id ? person : returnedContact))
+      })
+      setNewName('')
+      setNewNumber('')
     } else {
       event.preventDefault()
     const nameObject = { 

@@ -107,10 +107,7 @@ const App = () => {
       .erase(name.id).then(()=>{
         setPersons(persons.filter(person => person.id !== name.id))
       })
-      contactService
-      .getAll().then(initialContacts => {
-        setPersons(initialContacts)
-      })
+      
       }
     }
     return <div key={name.name}>

@@ -49,12 +49,26 @@ const Notification = ({message}) => {
   }
 }
 
+const ErrorNotification = ({error}) => {
+  if(error === null ) {
+    return null
+  }else {
+    return (
+      <div className="error">
+        {error}
+      </div>
+    )
+  }
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
   const [message, setMessage] = useState(null)
+  const [error, setError] = useState(null)
+  
 
   useEffect(() => {
     contactService
@@ -128,6 +142,9 @@ const App = () => {
       contactService
       .erase(name.id).then(()=>{
         setPersons(persons.filter(person => person.id !== name.id))
+      }).catch(error => {
+        console.log(`Contact ${name.name} was already deleted`)
+        setError(`Contact ${name.name} was already deleted`)
       })
       
       }
@@ -143,6 +160,7 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <Notification message={message} />
+      <ErrorNotification error={error} />
       <Filter newSearch={newSearch} handleSearchChange={handleSearchChange}/>
       <h1>add new</h1>
       <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange}
